@@ -24,7 +24,8 @@ request
 "mail":string,
 "password":string,
 "role":string,
-"fulname":string
+"fulname":string,
+"ownerId":string - if rule is visitor else ""
 }
 response
 - only status (404, 200, ...)
@@ -37,6 +38,22 @@ request
 }
 response
 {
-"slots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]
+"freeSlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]],
+"busySlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]
 }
+----------------------------------------------
+----------------------------------------------
+GET setTime - ?only for owner?
+request
+{
+"mail":string,
+"password":string,
+"freeSlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]],
+"busySlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]
+}
+response
+- only status (404, 200, ...)
+----------------------------------------------
+----------------------------------------------
+
 
