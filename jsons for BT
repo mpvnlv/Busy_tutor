@@ -1,1 +1,32 @@
+jsons for "Busy Tutor":
 
+https://github.com/EgorLeb/projects/assets/90501385/12c8e838-ff27-436e-b1a1-ce4468689c9d
+
+role: owner or visitor
+
+GET log
+request
+{ 
+"mail":string,
+"password":string
+}
+response
+{
+"role":string,
+"ownerId":string
+}
+
+
+GET reg
+request
+{ 
+"mail":string,
+"password":string,
+"role":string,
+
+}
+response
+{
+"role":string,
+"ownerId":string
+}
