@@ -13,20 +13,21 @@ request
 response
 {
 "role":string,
-"ownerId":string
+"ownerId":string - if rule is visitor else ""
 }
 
 
-GET reg
+POST reg
 request
 { 
 "mail":string,
 "password":string,
 "role":string,
-
+"fulname":string
 }
 response
-{
-"role":string,
-"ownerId":string
-}
+- only status (404, 200, ...)
+
+
+
+
