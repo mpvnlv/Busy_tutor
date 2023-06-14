@@ -3,7 +3,8 @@ jsons for "Busy Tutor":
 https://github.com/EgorLeb/projects/assets/90501385/12c8e838-ff27-436e-b1a1-ce4468689c9d
 
 role: owner or visitor
-
+----------------------------------------------
+----------------------------------------------
 GET log
 request
 { 
@@ -15,8 +16,8 @@ response
 "role":string,
 "ownerId":string - if rule is visitor else ""
 }
-
-
+----------------------------------------------
+----------------------------------------------
 POST reg
 request
 { 
@@ -27,7 +28,15 @@ request
 }
 response
 - only status (404, 200, ...)
-
-
-
+----------------------------------------------
+----------------------------------------------
+GET getTime
+request
+{
+"ownerID":string
+}
+response
+{
+"slots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]
+}
 
