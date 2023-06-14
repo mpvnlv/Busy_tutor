@@ -24,7 +24,7 @@ request
 "mail":string,
 "password":string,
 "role":string,
-"fulname":string,
+"fullname":string,
 "ownerId":string - if rule is visitor else ""
 }
 response
