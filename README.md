@@ -18,10 +18,27 @@ Our project aims to create a website for quick scheduling between tutor and stud
 - Students can view the tutor's free time slots and submit class requests to the free slots.
 - The site allows the tutor to view, edit, and manage their schedule, as well as accept or reject lesson requests from students.
 - Alerts and reminders to a linked email are provided for both parties - tutor and student - to keep communication timely and reliable.
+- in near future, we will add the dark and ligth modes
 
-### The techer interface: 
+1. First of all, you need to log in or register in our site. 
+*pictures of this pages*
+
+2. Then, if you are a teacher and you want to create you schedule on week, you just click on any slots and change the state of it (more clear and visible explanation will be on next week)
+### The teacher interface: 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="https://github.com/mpvnlv/Busy_teacher/assets/88908152/5d87e37e-7e82-4b91-82ff-67160e5a6614">
   <source media="(prefers-color-scheme: light)" srcset="https://github.com/mpvnlv/Busy_teacher/assets/88908152/5d87e37e-7e82-4b91-82ff-67160e5a6614">
   <img alt="Shows an illustrated calendar of teacher" src="https://github.com/mpvnlv/Busy_teacher/assets/88908152/5d87e37e-7e82-4b91-82ff-67160e5a6614">
 </picture>
+
+3. Then, if you are student, you will have a link from your tutor, where you will see the free slots for lessons and can book each of them. 
+### The student interface
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="https://github.com/mpvnlv/Busy_tutor/assets/88908152/1fe9477c-8b9a-430f-a634-d000de4d28fb">
+  <source media="(prefers-color-scheme: light)" srcset="https://github.com/mpvnlv/Busy_tutor/assets/88908152/1fe9477c-8b9a-430f-a634-d000de4d28fb">
+  <img alt="Shows an illustrated calendar of teacher" src="https://github.com/mpvnlv/Busy_tutor/assets/88908152/1fe9477c-8b9a-430f-a634-d000de4d28fb">
+</picture>
+
+
+
+
