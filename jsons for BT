@@ -14,7 +14,7 @@ request
 response
 {
 "role":string,
-"ownerId":string - if rule is visitor else ""
+"ownerMail":string - if rule is visitor else ""
 }
 ----------------------------------------------
 ----------------------------------------------
@@ -25,7 +25,7 @@ request
 "password":string,
 "role":string,
 "fullname":string,
-"ownerId":string - if rule is visitor else ""
+"ownerMail":string - if rule is visitor else ""
 }
 response
 - only status (404, 200, ...)
@@ -34,7 +34,7 @@ response
 GET getTime
 request
 {
-"ownerID":string
+"ownerMail":string
 }
 response
 {
