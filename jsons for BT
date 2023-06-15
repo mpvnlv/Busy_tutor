@@ -7,7 +7,8 @@ role: owner or visitor
 ----------------------------------------------
 GET log
 request
-{ 
+{
+"type":"log",
 "mail":string,
 "password":string
 }
@@ -21,6 +22,7 @@ response
 POST reg
 request
 { 
+"type":"reg",
 "mail":string,
 "password":string,
 "role":string,
@@ -34,6 +36,7 @@ response
 GET getTime
 request
 {
+"type":"getTime",
 "ownerMail":string
 }
 response
@@ -46,6 +49,7 @@ response
 GET setTime - ?only for owner?
 request
 {
+"type":"setTime",
 "mail":string,
 "password":string,
 "freeSlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]],
