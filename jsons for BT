@@ -15,7 +15,11 @@ request
 response
 {
 "role":string,
-"ownerMail":string - if rule is visitor else ""
+"mail":string,
+"fullname":string,
+"freeSlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]],  \\
+                                                                                        ===> or "ownerMail":string
+"busySlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]   //
 }
 ----------------------------------------------
 ----------------------------------------------
