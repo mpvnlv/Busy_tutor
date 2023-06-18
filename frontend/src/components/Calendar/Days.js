@@ -1,14 +1,9 @@
 import { days_name } from "./Constants";
-import { useState } from "react";
+import { useSelector } from "react-redux";
 
 export const Days = () => {
-  const [firstDate, setFirstDate] = useState(() => {
-    const currentDate = new Date();
-    const currentDay = currentDate.getDay();
-    const diff =
-      currentDate.getDate() - currentDay + (currentDay === 0 ? -6 : 1);
-    return new Date(currentDate.setDate(diff)).getDate();
-  });
+
+  const daysOfWeek = useSelector((state) => state.dateReducer.daysOfWeek);
 
   return (
     <div className="flex justify-between items-center pr-72 pl-48 pt-6 pb-4">
@@ -16,7 +11,7 @@ export const Days = () => {
         return (
           <div key={index} className="flex flex-col justify-between items-center">
             <p>{day}</p>
-            <p className="pt-6">{firstDate + index}</p>
+            <p className="pt-6">{daysOfWeek[index][0]}</p>
           </div>
         );
       })}
