@@ -17,9 +17,9 @@ response
 "role":string,
 "mail":string,
 "fullname":string,
-"freeSlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]],  \\
-                                                                                        ===> or "ownerMail":string
-"busySlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]   //
+"freeSlots":string,  \\
+                        ===> or "ownerMail":string
+"busySlots":string   //
 }
 ----------------------------------------------
 ----------------------------------------------
@@ -45,8 +45,8 @@ request
 }
 response
 {
-"freeSlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]],
-"busySlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]
+"freeSlots":string,
+"busySlots":string
 }
 ----------------------------------------------
 ----------------------------------------------
@@ -56,8 +56,8 @@ request
 "type":"setTime",
 "mail":string,
 "password":string,
-"freeSlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]],
-"busySlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]
+"freeSlots":string,
+"busySlots":string
 }
 response
 - only status (404, 200, ...)
@@ -69,17 +69,17 @@ request
 "type":"getInfo",
 "mail":string,
 "password":string,
-"freeSlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]],
-"busySlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]
+"freeSlots":string,
+"busySlots":string
 }
 response
 {
 "role":string,
 "mail":string,
 "fullname":string,
-"freeSlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]],  \\
-                                                                                        ===> or "ownerMail":string
-"busySlots":[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]   //
+"freeSlots":string,  \\
+                        ===> or "ownerMail":string
+"busySlots":string   //
 }
 ----------------------------------------------
 ----------------------------------------------
