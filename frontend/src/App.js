@@ -4,7 +4,7 @@ import { Calendar } from './pages/Calendar/Calendar';
 
 export const App = () => {
   return (
-    <div className="container mx-auto max-w-screen-[1440px]">
+    <div className="container mx-auto max-w-screen-[1440px] z-0">
       <Header />
       <Calendar />
     </div>
