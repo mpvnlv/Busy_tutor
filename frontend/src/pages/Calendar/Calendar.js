@@ -9,8 +9,8 @@ export const Calendar = () => {
   return (
     <>
       <Days />
-      <div className="flex flex-row items-start ">
-        <div className="flex flex-row overflow-y-auto no-scrollbar w-full max-h-[calc(100vh-16rem)] ">
+      <div className="flex flex-row items-start z-0">
+        <div className="flex flex-row overflow-auto no-scrollbar w-full max-h-[calc(100vh-16rem)] z-0">
           <Time />
           <Timeslots />
         </div>
