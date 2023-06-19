@@ -1,4 +1,6 @@
-import { TimeSlotDescription } from "./TimeSlotDescription";
+
+import { TimeSlotDescription } from './TimeSlotDescription';
+import React from 'react';
 
 export const SlotsDescription = () => {
     const slots = ["NO SLOT", "FREE", "BOOKED"];
