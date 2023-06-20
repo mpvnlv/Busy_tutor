@@ -19,7 +19,8 @@ response
 "fullname":string,
 "freeSlots":string,  \\
                         ===> or "ownerMail":string
-"busySlots":string   //
+"busySlots":string   //,
+"phone":string
 }
 ----------------------------------------------
 ----------------------------------------------
