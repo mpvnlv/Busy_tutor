@@ -1,13 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export const TimeSlotBooking = () => {
   const slots = ["NO SLOT", "FREE", "BOOKED"];
   const colors = ["bg-slot_no", "bg-slot_free", "bg-booked_normal"];
 
   var [count, setCount] = useState(0)
   // const [users, setUsers] = useState([])
-  if (count > 1) {
-    count = 0;
-  }
+
   const postData = async (url = '', data = {}) => {
 
     // Формируем запрос
@@ -41,7 +39,6 @@ export const TimeSlotBooking = () => {
     });
   }
   const sendFreeTime = () => {
-    // setCount(count+1)
     const data = {
       "type": "setTime",
       "mail": "ekjfnvjer",//видимо будем хранить в локалке данные 
@@ -55,37 +52,27 @@ export const TimeSlotBooking = () => {
     });
 
   }
-  // if (count == 1 || count == 0){
-  // return (
-  //      <div className="group p-1 border-header_border border-2 relative">
-  //       <div
-  //         onClick={count == 0 ? sendFreeTime() : setCount(count+1)}
-  //         className={`pb-20 hover:bg-no_slot_hover hover:cursor-pointer rounded-md  ${colors[count]}`}>
-  //           <p></p>
-  //       </div>
-  //     </div>
-  //   );
-  //  }
-  // else if (count == 0){
-  //   return (
-  //     <div className="group p-1 border-header_border border-2 relative">
-  //       <div
-  //         onClick={() => {
-  //           setCount(count + 1);
-  //         }}
-  //         className={`pb-20 hover:bg-no_slot_hover hover:cursor-pointer rounded-md  ${colors[count]}`}
-  //       ></div>
-  //     </div>
-  //   );
-  // }
 
+  useEffect(() => {
+    if (count === 1) {
+      sendFreeTime()
+    }
+    if (count === 2) {
+      get_info()
+    }
+    if (count > 1) {
+        setCount(0)
+      }
+  }, [count])
+
+   
   return (
     <div className="group p-1 border-header_border border-2 relative">
       <div
-        onClick={count == 0 ? sendFreeTime() : (count == 1 ? setCount(count + 1) : get_info())}
+        onClick={() => {setCount(count+1)}}
         className={`pb-20 hover:bg-no_slot_hover hover:cursor-pointer rounded-md  ${colors[count]}`}
       ></div>
-      {count == 2 ? <div
+      {count === 2 ? <div
         className="flex flex-col justify-center items-center  absolute -top-14 -right-28 group-hover:visible invisible  bg-white border-booked_clicked border-2 py-4 px-10 z-20
       rounded-tl-lg rounded-tr-lg rounded-br-lg text-booked_clicked"
       >
