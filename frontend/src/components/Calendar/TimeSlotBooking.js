@@ -1,55 +1,51 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
+
 export const TimeSlotBooking = () => {
   const slots = ["NO SLOT", "FREE", "BOOKED"];
   const colors = ["bg-slot_no", "bg-slot_free", "bg-booked_normal"];
 
   var [count, setCount] = useState(0)
-  // const [users, setUsers] = useState([])
 
-  const postData = async (url = '', data = {}) => {
-
-    // Формируем запрос
-    const response = await fetch(url, {
-      // Метод, если не указывать, будет использоваться GET
-      method: 'POST',
-      headers: {
-        "Content-type": "application/json",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "content-type",
-      },
-      // Данные
-      body: JSON.stringify(data)
-    });
-    return response;
-  }
   var fullname = "";
 
   const get_info = () => {
-    // setCount(count + 1);
+
     const data_student = {
       "type": "log",
-      "mail": "ekjfnvjer",
-      "password": "123456"
+      "mail": "vikal",
+      "password": "123"
+      // "type":"reg",
+      // "mail":"vika",
+      // "password":"123",
+      // "role":"owner",
+      // "fullname":"Kruk Viktoria",
+      // "ownerMail": "",
+      // "phone":"8906675883"
     }
-    postData('https://testing.egorleb.repl.co', data_student).then(async (data_) => {
-      const response = await data_.json();
-      fullname = response.fullname;
-      console.log(response.fullname);
-      return response;
-    });
+    axios.post('https://testing.egorleb.repl.co', data_student)
+    .then(response => (
+      console.log(response.data),
+      fullname = response.data.fullname))
+      .catch((error)=>{console.log(error)});
+
   }
   const sendFreeTime = () => {
     const data = {
-      "type": "setTime",
-      "mail": "ekjfnvjer",//видимо будем хранить в локалке данные 
-      "password": "123456",
-      "freeSlots": "[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]",
-      "busySlots": "[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]"
+      "type": "log",
+      "mail": "vikal",
+      "password": "123"
+      // "type": "setTime",
+      // "mail": "vikal",//видимо будем хранить в локалке данные 
+      // "password": "123",
+      // "freeSlots": "[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]",
+      // "busySlots": "[[datetime, datetime], [datetime, datetime], ..., [datetime, datetime]]"
     }
-    postData('https://testing.egorleb.repl.co', data).then(async (data_) => {
-      const res = await data_.json();
-      console.log("1")
-    });
+    // const article = { title: 'React POST Request Example' };
+    axios.post('https://testing.egorleb.repl.co', data)
+        .then(response => (console.log(response.data))).catch((error)=>{console.log(error)});
+
+   
 
   }
 
