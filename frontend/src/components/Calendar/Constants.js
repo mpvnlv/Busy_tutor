@@ -58,7 +58,7 @@ export const getCurrentMonday = (day, month, year) => {
     if (month === 0) {
       console.log(
         "Exceeded year",
-        day + getDaysInMonth(11, year - 1) - currentDayOfWeek,
+        day + getDaysInMonth(11, year - 1) - (6 - currentDayOfWeek),
         0,
         year - 1
       );
@@ -70,7 +70,7 @@ export const getCurrentMonday = (day, month, year) => {
     } else {
       console.log(
         "Exceeded month",
-        day + getDaysInMonth(month - 1, year) - currentDayOfWeek,
+        day + getDaysInMonth(month - 1, year) - (6 - currentDayOfWeek),
         month - 1,
         year
       );
@@ -101,7 +101,6 @@ export const getNextMonday = (date) => {
   }
 };
 
-
 export const getPrevMonday = (date) => {
   const [day, month, year] = date;
   console.log(day, month, year);
@@ -129,41 +128,40 @@ export const getPrevMonday = (date) => {
   }
 };
 
-export const getDaysInWeek = (curSunday, curMonth, curYear) => {
-  console.log("Start", curSunday, curMonth, curYear);
+export const getDaysInWeek = (curMonday, curMonth, curYear) => {
+  console.log("Start", curMonday, curMonth, curYear);
   const daysInWeek = [];
   for (let i = 0; i < 7; i++) {
-    if (curSunday + i <= getDaysInMonth(curMonth, curYear)) {
-      console.log("Not exceeded", curSunday + i, curMonth, curYear);
-      daysInWeek.push([curSunday + i, curMonth, curYear]);
+    if (curMonday + i <= getDaysInMonth(curMonth, curYear)) {
+      console.log("Not exceeded", curMonday + i, curMonth, curYear);
+      daysInWeek.push([curMonday + i, curMonth, curYear]);
     } else {
       if (curMonth === 11) {
         console.log(
           "Exceeded curYear",
-          curSunday + i - getDaysInMonth(curMonth, curYear),
+          curMonday + i - getDaysInMonth(curMonth, curYear),
           1,
           curYear + 1
         );
         daysInWeek.push([
-          curSunday + i - getDaysInMonth(curMonth, curYear),
+          curMonday + i - getDaysInMonth(curMonth, curYear),
           1,
           curYear + 1,
         ]);
       } else {
         console.log(
           "Exceeded curMonth",
-          curSunday + i - getDaysInMonth(curMonth, curYear),
+          curMonday + i - getDaysInMonth(curMonth, curYear),
           curMonth + 1,
           curYear
         );
         daysInWeek.push([
-          curSunday + i - getDaysInMonth(curMonth, curYear),
+          curMonday + i - getDaysInMonth(curMonth, curYear),
           curMonth + 1,
           curYear,
         ]);
       }
     }
   }
-
   return daysInWeek;
 };

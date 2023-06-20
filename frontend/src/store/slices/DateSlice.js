@@ -7,7 +7,7 @@ import { getPrevMonday } from "../../components/Calendar/Constants";
 
 const initialState = {
   curSunday: getCurrentMonday(...getCurrentDate()),
-  daysOfWeek: getDaysInWeek(...getCurrentDate()),
+  daysOfWeek: getDaysInWeek(...getCurrentMonday(...getCurrentDate())),
 };
 
 const dateSlice = createSlice({
