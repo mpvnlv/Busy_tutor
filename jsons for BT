@@ -32,7 +32,8 @@ request
 "password":string,
 "role":string,
 "fullname":string,
-"ownerMail":string - if rule is visitor else ""
+"ownerMail":string - if rule is visitor else "",
+"phone":string
 }
 response
 - only status (404, 200, ...)
