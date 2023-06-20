@@ -26,7 +26,7 @@ export const TimeSlotBooking = () => {
   var fullname = "";
   
   const get_info = () =>{
-    setCount(count + 1);
+    // setCount(count + 1);
     const data_student = {
       "type":"log",
       "mail":"ekjfnvjer",
@@ -40,7 +40,7 @@ export const TimeSlotBooking = () => {
     });
   }
   const sendFreeTime = () =>{
-    setCount(count+1)
+    // setCount(count+1)
     const data = {
       "type":"setTime",
       "mail":"ekjfnvjer",//видимо будем хранить в локалке данные 
@@ -50,32 +50,33 @@ export const TimeSlotBooking = () => {
     }
       postData('https://testing.egorleb.repl.co', data).then(async ( data_) => {
         const res = await data_.json();
+        console.log("1")
       });
      
 }
-  if (count == 1){
+  if (count == 1 || count == 0){
   return (
        <div className="group p-1 border-header_border border-2 relative">
         <div
-          onClick={sendFreeTime}
+          onClick={count == 0 ? sendFreeTime() : setCount(count+1)}
           className={`pb-20 hover:bg-no_slot_hover hover:cursor-pointer rounded-md  ${colors[count]}`}>
             <p></p>
         </div>
       </div>
     );
    }
-  else if (count == 0){
-    return (
-      <div className="group p-1 border-header_border border-2 relative">
-        <div
-          onClick={() => {
-            setCount(count + 1);
-          }}
-          className={`pb-20 hover:bg-no_slot_hover hover:cursor-pointer rounded-md  ${colors[count]}`}
-        ></div>
-      </div>
-    );
-  }
+  // else if (count == 0){
+  //   return (
+  //     <div className="group p-1 border-header_border border-2 relative">
+  //       <div
+  //         onClick={() => {
+  //           setCount(count + 1);
+  //         }}
+  //         className={`pb-20 hover:bg-no_slot_hover hover:cursor-pointer rounded-md  ${colors[count]}`}
+  //       ></div>
+  //     </div>
+  //   );
+  // }
   else{
     return (
       <div className="group p-1 border-header_border border-2 relative">
