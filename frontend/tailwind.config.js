@@ -11,6 +11,8 @@ module.exports = {
         booked_clicked: "#2151AE",
         booked_normal: "#88DBFF",
         text_dark: "#221E1E",
+        button_selected: "#E7F8FF",
+        disabled_border: "#99AFDA",
       },
     },
   },
