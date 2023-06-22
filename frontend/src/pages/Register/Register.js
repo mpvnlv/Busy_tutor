@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const Register = () => {
   const {
@@ -11,12 +12,35 @@ export const Register = () => {
   } = useForm({ mode: "onBlur", shouldUnregister: true });
 
   const onSubmit = (data) => {
+    data.fullname = data.firstName+" "+data.lastName
+    delete data["firstName"]
+    delete data["lastName"]
     data.role = role;
+    data.type = "reg"
     console.log(JSON.stringify(data));
-    navigate("/calendar");
+    axios.post('https://testing.egorleb.repl.co', data)
+    .then(response => (
+      console.log(response.data),
+      localStorage.setItem("mail",data.mail),
+      localStorage.setItem("password", data.password),
+      alert("Register succesfull "),
+      navigate("/calendar")
+      ))
+      
+      .catch((reason) => {
+        if (reason.response){
+          if (reason.response.status == 405){
+            alert("This user is alredy exist. Please log in")
+          }
+          console.log(reason.response.status)
+                }
+        else if (reason.request){
+          console.log(reason.response.status)}
+        });
+    
   };
 
-  const [role, setRole] = useState("Student");
+  const [role, setRole] = useState("visitor");
   const navigate = useNavigate();
 
   return (
@@ -31,10 +55,10 @@ export const Register = () => {
         <div className="flex flex-row items-center justify-between w-5/6 mb-2">
           <button
             type="button"
-            onClick={() => setRole("Tutor")}
+            onClick={() => setRole("owner")}
             className={`flex flex-col justify-center items-center rounded  border  w-1/2 py-2 mr-4
             ${
-              role === "Tutor"
+              role === "owner"
                 ? "border-disabled_border text-disabled_border cursor-default"
                 : "border-booked_clicked text-booked_clicked hover:bg-button_selected"
             }`}
@@ -43,10 +67,10 @@ export const Register = () => {
           </button>
           <button
             type="button"
-            onClick={() => setRole("Student")}
+            onClick={() => setRole("visitor")}
             className={`flex flex-col justify-center items-center rounded  border  w-1/2 py-2
             ${
-              role === "Student"
+              role === "visitor"
                 ? "border-disabled_border text-disabled_border cursor-default"
                 : "border-booked_clicked text-booked_clicked hover:bg-button_selected"
             }`}
@@ -91,7 +115,7 @@ export const Register = () => {
           <p>Alphabetical characters only</p>
         )}
         <input
-          {...register("Email", {
+          {...register("mail", {
             required: true,
             pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
           })}
@@ -102,9 +126,9 @@ export const Register = () => {
         {errors?.Email?.type === "required" && <p>This field is required</p>}
         {errors?.Email?.type === "pattern" && <p>Not a valid email</p>}
         <input
-          {...register("Phone", {
+          {...register("phone", {
             required: true,
-            pattern: /^[0-9]+$/,
+            pattern: /^[0-9+]+$/,
           })}
           type="phone"
           placeholder="Phone"
@@ -114,12 +138,12 @@ export const Register = () => {
         {errors?.Phone?.type === "pattern" && <p>Not a valid phone</p>}
 
         <input
-          {...register("Password", {
+          {...register("password", {
             required: true,
             minLength: 8,
           })}
           type="password"
-          placeholder="Password"
+          placeholder="password"
           className="flex flex-col items-center justify-center my-3 px-4 py-2 text-booked_clicked rounded border border-disabled_border placeholder-disabled_border w-5/6"
         ></input>
         {errors?.Email?.type === "required" && <p>This field is required</p>}
@@ -135,7 +159,7 @@ export const Register = () => {
         </button>
         <div className="flex flex-row items-center justify-between mt-5">
           <p>Already have an account?</p>
-          <p className="text-booked_clicked ml-4">Log in</p>
+          <p onClick = {()=>navigate("/login")} className="text-booked_clicked ml-4">Log in</p>
         </div>
       </form>
     </div>

@@ -4,11 +4,21 @@ import Avatar from "../../assets/Avatar.png";
 import { useDispatch, useSelector } from "react-redux";
 import { months_name } from "../Calendar/Constants";
 import { nextWeek, prevWeek } from "../../store/slices/DateSlice";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Header = () => {
 
   const curSunday = useSelector((state) => state.dateReducer.curSunday);
   const dispatch = useDispatch();
+  const navigate = useNavigate()
+  
+   const Logout = () =>{
+    navigate("/")
+  }
+  
+
+
 
   return (
     <div className="flex justify-between items-center bg-header_bg py-6 px-12
@@ -22,7 +32,7 @@ export const Header = () => {
       <div className="flex justify-between items-center">
         <h1 className="pr-6 text-booked_clicked">AS TUTOR</h1>
         <img src={Avatar} alt="avatar" />
-        <h3 className="pl-4">Logout</h3>
+        <h3 onClick = {()=>{Logout()}} className="pl-4">Logout</h3>
         </div>
     </div>
   );
