@@ -63,7 +63,7 @@ response
 }
 ----------------------------------------------
 ----------------------------------------------
-POST setTime - ?only for owner?
+POST setTime - ?????????????????????????????????????only for owner?????????????????????????????
 request
 {
 "type":"setTime",
@@ -71,6 +71,22 @@ request
 "password":string,
 "freeSlots":string,
 "busySlots":string
+}
+response
+- only status (404, 200, ...)
+----------------------------------------------
+----------------------------------------------
+POST createEvent
+request
+{
+"type":"createEvent",
+"mail":string,
+"password":string,
+"secondMail":string,
+"nameOfEvent":string,
+"description":string,
+"start":string, ------ex: "2023-06-23T10:00:00+03:00"
+"end":string --------ex: "2023-06-23T10:00:00+03:00"
 }
 response
 - only status (404, 200, ...)
