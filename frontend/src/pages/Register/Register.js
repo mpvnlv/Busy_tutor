@@ -104,7 +104,7 @@ export const Register = () => {
         <input
           {...register("Phone", {
             required: true,
-            pattern: /^[0-9]+$/,
+            pattern: /^[0-9+]+$/,
           })}
           type="phone"
           placeholder="Phone"
