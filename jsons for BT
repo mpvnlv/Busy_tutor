@@ -22,6 +22,17 @@ response
 "busySlots":string   //,
 "phone":string
 }
+
+EXAMPLE
+{ 
+"type":"reg",
+"mail":"egor28476@gmail.com",
+"password":"123123123",
+"role":"owner",
+"fullname":"EGOR LEBEDEV",
+"phone":"89224337698"
+}
+
 ----------------------------------------------
 ----------------------------------------------
 POST reg
