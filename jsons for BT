@@ -25,12 +25,9 @@ response
 
 EXAMPLE
 { 
-"type":"reg",
+"type":"log",
 "mail":"egor28476@gmail.com",
-"password":"123123123",
-"role":"owner",
-"fullname":"EGOR LEBEDEV",
-"phone":"89224337698"
+"password":"123123123"
 }
 
 ----------------------------------------------
@@ -48,6 +45,16 @@ request
 }
 response
 - only status (404, 200, ...)
+EXAMPLE
+{ 
+"type":"reg",
+"mail":"egor28476@gmail.com",
+"password":"123123123",
+"role":"owner",
+"fullname":"EGOR LEBEDEV",
+"phone":"89224337698"
+}
+
 ----------------------------------------------
 ----------------------------------------------
 POST getTime
@@ -86,9 +93,23 @@ request
 "nameOfEvent":string,
 "description":string,
 "start":string, ------ex: "2023-06-23T10:00:00+03:00"
-"end":string --------ex: "2023-06-23T10:00:00+03:00"
+"end":string --------ex: "2023-06-23T11:00:00+03:00"
 }
 response
 - only status (404, 200, ...)
+
+EXAMPLE
+{ 
+"type":"createEvent",
+"mail":"egor28476@gmail.com",
+"password":"123123123",
+"secondMail":"",
+"nameOfEvent":"MAMAPAPA",
+"description":"PAPAMAMA",
+"start":"2023-06-23T10:00:00+03:00", ------ex: "2023-06-23T10:00:00+03:00"
+"end":"2023-06-23T11:00:00+03:00" --------ex: "2023-06-23T11:00:00+03:00"
+}
+
+
 ----------------------------------------------
 ----------------------------------------------
