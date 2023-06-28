@@ -1,0 +1,44 @@
+def get_and_save_owner_token():
+    from google_auth_oauthlib.flow import InstalledAppFlow
+    SCOPES = ['https://www.googleapis.com/auth/calendar']
+    flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+    creds = flow.run_local_server(port=0)
+    with open('token.json', 'w') as token:
+        token.write(creds.to_json())
+
+
+def create_event(name="Event", location="Online",
+                 description="Description", start="2023-06-23T10:00:00+03:00",
+                 end="2023-06-23T13:00:00+03:00", frequency="DAILY", count=1, attendees=None):
+    from google.oauth2.credentials import Credentials
+    from googleapiclient.discovery import build
+    from googleapiclient.errors import HttpError
+    SCOPES = ['https://www.googleapis.com/auth/calendar']
+    creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    final_attendees = []
+    for attendee in attendees:
+        final_attendees.append({'email': f'{attendee}'})
+    try:
+        service = build("calendar", "v3", credentials=creds)
+        event = {
+            "summary": name,
+            "location": location,
+            "description": description,
+            "colorId": 10,
+            "start": {
+                "dateTime": start,
+                "timeZone": "Europe/Moscow"
+            },
+            "end": {
+                "dateTime": end,
+                "timeZone": "Europe/Moscow"
+            },
+            "recurrence": [
+                f"RRULE:FREQ={frequency};COUNT={count}"
+            ],
+            "attendees": final_attendees
+        }
+        event = service.events().insert(calendarId="primary", sendNotifications=True, body=event).execute()
+        return f"Event created {event.get('htmlLink')}"
+    except HttpError as error:
+        return 'An error occurred: %s' % error
