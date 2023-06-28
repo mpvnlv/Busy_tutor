@@ -160,3 +160,58 @@ CREATE TABLE IF NOT EXISTS visitors (
 connection.commit()
 
 print(getInfo("vikalol2003"))
+
+server = socket.create_server(("", 2000))
+server.listen(100)
+cn = 0
+while True:
+    cn += 1
+    content, address = server.accept()
+
+    request = content.recv(102400).decode().split('\n')
+    print(f"--------------------{cn}--------------------")
+    print(request[0])
+
+    method, url, prot = request[0].split()
+
+    code_response = 200
+    res = {}
+    if method == "POST":
+        data_json = dict()
+        if request[-1] != '':
+            data_json = json.loads(request[-1])
+
+        print(data_json)
+        if data_json.get("type", "-") == "log" and "mail" in data_json and "password" in data_json:
+            res = log(data_json["mail"], data_json["password"])
+        elif data_json.get("type", "-") == "reg" and "mail" in data_json and "password" in data_json \
+                and "role" in data_json and "fullname" in data_json and "phone" in data_json:
+            code_response = reg(data_json["mail"], data_json["password"], data_json["role"], data_json["fullname"], data_json["phone"], data_json.get("ownerMail", ""))
+        elif data_json.get("type", "-") == "getTime" and "mail" in data_json:
+            res = getTime(data_json["mail"])
+            if res is None:
+                res = {}
+                code_response = 406
+        elif data_json.get("type", "-") == "setTime" and "mail" in data_json and "password" in data_json \
+                and "freeSlots" in data_json and "busySlots" in data_json:
+            if len(checkInOwners(data_json["mail"], data_json["password"])) != 0:
+                setFreeSlots(data_json["mail"], data_json["password"], data_json["freeSlots"])
+                setBusySlots(data_json["mail"], data_json["password"], data_json["busySlots"])
+            else:
+                print(checkInOwners(data_json["mail"], data_json["password"]))
+                code_response = 406
+        else:
+            code_response = 404
+
+    connection.commit()
+    print(f"--------------------{cn}--------------------")
+    print()
+    head = f'HTTP/1.1 {code_response} {"OK" if code_response == 200 else "FAIL"}\r\n' \
+           f'Content-Type: application/json; charset=utf-8\r\nAccess-Control-Allow-Origin: *\r\n' \
+           f'Access-Control-Allow-Headers: *\r\n\r\n'
+    # content.send(b'HTTP/1.1 200 OK\r\n')
+    # content.send(b'Content-Type: text/html; charset=utf-8\r\n')
+    # content.send(b'Access-Control-Request-Headers: content-type\r\n')
+    # content.send(b'Access-Control-Request-Method: POST\r\n')
+    content.send(head.encode() + json.dumps(res).encode())
+    content.close()
