@@ -204,3 +204,70 @@ app.debug = True
 
 
 @app.route('/', methods=["POST", "GET", "OPTIONS"])
+
+def index():
+    if request.method in ["GET", "OPTIONS"]:
+        resp = make_response("Hello, I am Egor. Server do not available for you in this method(", 200)
+        resp.headers["Access-Control-Allow-Origin"] = "*"
+        resp.headers["Content-Type"] = "application/json; charset=utf-8"
+        resp.headers["Access-Control-Allow-Headers"] = "*"
+        return resp
+    
+    
+    global cn, connection, cursor
+    cn += 1
+
+    data_json = request.get_json()  # dict()
+         code_response = 200
+    res = {}
+    if data_json.get("type", "-") == "log" and "mail" in data_json and "password" in data_json:
+        res = log(data_json["mail"], data_json["password"])
+        if len(res) == 0:
+            code_response = 406
+    elif data_json.get("type", "-") == "reg" and "mail" in data_json and "password" in data_json \
+            and "role" in data_json and "fullname" in data_json and "phone" in data_json:
+        code_response = reg(data_json["mail"], data_json["password"], data_json["role"], data_json["fullname"],
+                            data_json["phone"], data_json.get("ownerMail", ""))
+    elif data_json.get("type", "-") == "getTime" and "mail" in data_json:
+        res = getTime(data_json["mail"])
+        if res is None:
+            res = {}
+            code_response = 406
+    elif data_json.get("type", "-") == "setTime" and "mail" in data_json and "password" in data_json \
+            and "freeSlots" in data_json and "busySlots" in data_json:
+        if len(checkInOwners(data_json["mail"], data_json["password"])) != 0:
+            setFreeSlots(data_json["mail"], data_json["password"], data_json["freeSlots"])
+            setBusySlots(data_json["mail"], data_json["password"], data_json["busySlots"])
+        else:
+            code_response = 406
+    elif data_json.get("type", "-") == "createEvent" and "mail" in data_json and "password" in data_json and\
+            "secondMail" in data_json and "nameOfEvent" in data_json and "description" in data_json and\
+            "start" in data_json and "end" in data_json:
+        if len(checkInOwners(data_json["mail"], data_json["password"])) != 0 or \
+                len(checkInVisitors(data_json["mail"], data_json["password"])) != 0:
+            res = create_event(name=data_json["nameOfEvent"], description=data_json["description"],
+                               start=data_json["start"], end=data_json["end"],
+                               attendees=([data_json["mail"], data_json["secondMail"]]) if len(data_json["secondMail"]) != 0 else [data_json["mail"]])
+            if len(res) == 0:
+                code_response = 404
+        else:
+            code_response = 406
+    else:
+        code_response = 404
+    connection.commit()
+
+    resp = make_response(json.dumps(res), code_response)
+    resp.headers["Content-Type"] = "application/json; charset=utf-8"
+    resp.headers["Access-Control-Allow-Origin"] = "*"
+    resp.headers["Access-Control-Allow-Headers"] = "*"
+
+    return resp
+
+
+# @app.route('/', methods=["GET", "OPTIONS"])
+# def index_GET():
+#     resp = make_response("Hello, I am Egor. Server do not available for you in this method(", 200)
+#     resp.headers["Access-Control-Allow-Origin"] = "*"
+#     resp.headers["Content-Type"] = "application/json; charset=utf-8"
+#     resp.headers["Access-Control-Allow-Headers"] = "*"
+#     return resp
