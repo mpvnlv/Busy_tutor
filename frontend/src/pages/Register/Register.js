@@ -3,6 +3,12 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+export const errorMessagesServer = {
+  404: 'User not found!',
+  403: 'Wrong credentials!',
+  405: 'Email already in use!',
+  500: 'Something went wrong. Try again later'
+ }
 export const Register = () => {
   const {
     register,
@@ -10,6 +16,7 @@ export const Register = () => {
     handleSubmit,
     reset,
   } = useForm({ mode: "onBlur", shouldUnregister: true });
+  var check = 0;
 
   const onSubmit = (data) => {
     data.fullname = data.firstName+" "+data.lastName
@@ -18,7 +25,11 @@ export const Register = () => {
     data.role = role;
     data.type = "reg"
     console.log(JSON.stringify(data));
-    axios.post('https://testing.egorleb.repl.co', data)
+    const header = {
+      "Access-Control-Allow-Origin":"*",
+      "Content-type":"application/json"
+    }
+    axios.post('https://egor28476.pythonanywhere.com/', data, header)
     .then(response => (
       console.log(response.data),
       localStorage.setItem("mail",data.mail),
@@ -26,17 +37,20 @@ export const Register = () => {
       alert("Register succesfull "),
       navigate("/calendar")
       ))
-      
       .catch((reason) => {
         if (reason.response){
           if (reason.response.status == 405){
-            alert("This user is alredy exist. Please log in")
+            check = 405;
+            console.log(errorMessagesServer[check])
+
+            // alert("This user is alredy exist. Please log in")
+        
           }
-          console.log(reason.response.status)
                 }
         else if (reason.request){
-          console.log(reason.response.status)}
-        });
+          console.log(reason.response)}
+        
+      });
     
   };
 
@@ -152,11 +166,13 @@ export const Register = () => {
         )}
 
         <button
+        
           type="submit"
           className="flex flex-col items-center justify-center  text-booked_clicked rounded border border-disabled_border placeholder-disabled_border hover:bg-button_selected w-5/6 py-2 mt-8"
         >
           SIGN UP
         </button>
+        <div>{errorMessagesServer[check]}</div>
         <div className="flex flex-row items-center justify-between mt-5">
           <p>Already have an account?</p>
           <p onClick = {()=>navigate("/login")} className="text-booked_clicked ml-4">Log in</p>

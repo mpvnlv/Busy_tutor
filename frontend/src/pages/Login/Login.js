@@ -14,7 +14,7 @@ export const Login = () => {
   const onSubmit = (data) => {
     data.type = "log";
     console.log(JSON.stringify(data));
-    axios.post('https://testing.egorleb.repl.co', data)
+    axios.post('https://egor28476.pythonanywhere.com/', data)
     .then(response => (
       console.log(response.data),
       localStorage.setItem("mail",data.mail),
@@ -26,8 +26,11 @@ export const Login = () => {
       
       .catch((reason) => {
         if (reason.response){
-          if (reason.response.status == 405){
-            alert("This user is alredy exist. Please log in")
+          if (reason.response.status == 406){
+            // alert("This user is alredy exist. Please log in")
+          }
+          else if (reason.response.status == 405){
+        
           }
           console.log(reason.response.status)
                 }
