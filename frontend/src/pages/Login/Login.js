@@ -2,13 +2,16 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setCreds } from "../../store/slices/RoleSlice";
 
 export const Login = () => {
+  const dispatch = useDispatch();
+
   const {
-   register,
+    register,
     formState: { errors },
     handleSubmit,
-    
   } = useForm({ mode: "onBlur", shouldUnregister: true });
 
   const onSubmit = (data) => {
@@ -32,14 +35,11 @@ export const Login = () => {
           else if (reason.response.status == 405){
         
           }
-          console.log(reason.response.status)
-                }
-        else if (reason.request){
-          console.log(reason.response.status)}
+          console.log(reason.response.status);
+        } else if (reason.request) {
+          console.log(reason.response.status);
         }
-        
-      );
-         
+      });
   };
 
   const navigate = useNavigate();
@@ -50,10 +50,8 @@ export const Login = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col items-center justify-center max-h-fit max-w-fit rounded-md border border-booked_clicked  px-42 py-8"
       >
-        <h1 className="mb-8 mx-40 text-booked_clicked text-2xl">
-          LOG IN
-        </h1>
-    
+        <h1 className="mb-8 mx-40 text-booked_clicked text-2xl">LOG IN</h1>
+
         <input
           {...register("mail", {
             required: true,
@@ -66,7 +64,6 @@ export const Login = () => {
         {errors?.Email?.type === "required" && <p>This field is required</p>}
         {errors?.Email?.type === "pattern" && <p>Not a valid email</p>}
 
-
         <input
           {...register("password", {
             required: true,
@@ -77,7 +74,6 @@ export const Login = () => {
           className="flex flex-col items-center justify-center my-3 px-4 py-2 text-booked_clicked rounded border border-disabled_border placeholder-disabled_border w-5/6"
         ></input>
         {errors?.Email?.type === "required" && <p>This field is required</p>}
-       
 
         <button
           type="submit"
@@ -87,7 +83,9 @@ export const Login = () => {
         </button>
         <div className="flex flex-row items-center justify-between mt-5">
           <p>Do not have an account?</p>
-          <p onClick = {()=>navigate("/")} className="text-booked_clicked ml-4">Register</p>
+          <p onClick={() => navigate("/")} className="text-booked_clicked ml-4">
+            Register
+          </p>
         </div>
       </form>
     </div>
