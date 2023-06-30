@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setRole } from "../../store/slices/RoleSlice";
 
 export const Register = () => {
   const {
@@ -12,35 +14,39 @@ export const Register = () => {
   } = useForm({ mode: "onBlur", shouldUnregister: true });
 
   const onSubmit = (data) => {
-    data.fullname = data.firstName+" "+data.lastName
-    delete data["firstName"]
-    delete data["lastName"]
+    data.fullname = data.firstName + " " + data.lastName;
+    delete data["firstName"];
+    delete data["lastName"];
     data.role = role;
-    data.type = "reg"
+    data.type = "reg";
     console.log(JSON.stringify(data));
-    axios.post('https://testing.egorleb.repl.co', data)
-    .then(response => (
-      console.log(response.data),
-      localStorage.setItem("mail",data.mail),
-      localStorage.setItem("password", data.password),
-      alert("Register succesfull "),
-      navigate("/calendar")
-      ))
-      
+    axios
+      .post("https://testing.egorleb.repl.co", data)
+      .then(
+        (response) => (
+          console.log(response.data),
+          localStorage.setItem("mail", JSON.stringify(data.mail)),
+          localStorage.setItem("password", JSON.stringify(data.password)),
+          alert("Register succesfull "),
+          navigate("/login")
+        )
+      )
+
       .catch((reason) => {
-        if (reason.response){
-          if (reason.response.status == 405){
-            alert("This user is alredy exist. Please log in")
+        if (reason.response) {
+          if (reason.response.status === 405) {
+            alert("This user is alredy exist. Please log in");
           }
-          console.log(reason.response.status)
-                }
-        else if (reason.request){
-          console.log(reason.response.status)}
-        });
-    
+          console.log(reason.response.status);
+        } else if (reason.request) {
+          console.log(reason.response.status);
+        }
+      });
   };
 
-  const [role, setRole] = useState("visitor");
+
+  const dispatch = useDispatch();
+   const role = useSelector((state) => state.roleReducer.role);
   const navigate = useNavigate();
 
   return (
@@ -55,7 +61,7 @@ export const Register = () => {
         <div className="flex flex-row items-center justify-between w-5/6 mb-2">
           <button
             type="button"
-            onClick={() => setRole("owner")}
+            onClick={() => dispatch(setRole("owner"))}
             className={`flex flex-col justify-center items-center rounded  border  w-1/2 py-2 mr-4
             ${
               role === "owner"
@@ -67,7 +73,7 @@ export const Register = () => {
           </button>
           <button
             type="button"
-            onClick={() => setRole("visitor")}
+            onClick={() => dispatch(setRole("visitor"))}
             className={`flex flex-col justify-center items-center rounded  border  w-1/2 py-2
             ${
               role === "visitor"
@@ -159,7 +165,12 @@ export const Register = () => {
         </button>
         <div className="flex flex-row items-center justify-between mt-5">
           <p>Already have an account?</p>
-          <p onClick = {()=>navigate("/login")} className="text-booked_clicked ml-4">Log in</p>
+          <p
+            onClick={() => navigate("/login")}
+            className="text-booked_clicked ml-4"
+          >
+            Log in
+          </p>
         </div>
       </form>
     </div>

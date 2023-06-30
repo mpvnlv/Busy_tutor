@@ -12,12 +12,12 @@ export const Header = () => {
   const curSunday = useSelector((state) => state.dateReducer.curSunday);
   const dispatch = useDispatch();
   const navigate = useNavigate()
-  
+  const role = useSelector((state) => state.roleReducer.role);
+
    const Logout = () =>{
     navigate("/")
   }
   
-
 
 
   return (
@@ -30,7 +30,7 @@ export const Header = () => {
         <img onClick={() => {dispatch(nextWeek())}} className="hover:cursor-pointer" src={RightArrow} alt="right arrow" />
       </div>
       <div className="flex justify-between items-center">
-        <h1 className="pr-6 text-booked_clicked">AS TUTOR</h1>
+        <h1 className="pr-6 text-booked_clicked">AS {role === "visitor" ? "STUDENT" : "TUTOR" }</h1>
         <img src={Avatar} alt="avatar" />
         <h3 onClick = {()=>{Logout()}} className="pl-4">Logout</h3>
         </div>
