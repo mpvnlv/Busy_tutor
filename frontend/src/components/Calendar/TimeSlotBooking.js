@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateStatuses } from "../../store/slices/StatusSlice";
+import { link } from "../../components/Calendar/Constants";
 
 export const TimeSlotBooking = (props) => {
   const colors = {
@@ -32,7 +33,7 @@ export const TimeSlotBooking = (props) => {
       // "phone":"8906675883"
     };
     axios
-      .post("https://testing.egorleb.repl.co", data_student)
+      .post(link, data_student)
       .then(
         (response) => (
           console.log(response.data), (fullname = response.data.fullname)

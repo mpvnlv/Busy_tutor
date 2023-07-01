@@ -4,9 +4,18 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setCreds } from "../../store/slices/RoleSlice";
-
+import { link } from "../../components/Calendar/Constants";
 export const Login = () => {
   const dispatch = useDispatch();
+  var role = "";
+  function role_user(){
+    if (role == "owner"){
+      navigate("/calendar")
+    }
+    else{
+      navigate("/token")
+    }
+  }
 
   const {
     register,
@@ -17,14 +26,13 @@ export const Login = () => {
   const onSubmit = (data) => {
     data.type = "log";
     console.log(JSON.stringify(data));
-    axios.post('https://egor28476.pythonanywhere.com/', data)
+    axios.post(link, data)
     .then(response => (
       console.log(response.data),
       localStorage.setItem("mail",JSON.stringify(data.mail)),
       localStorage.setItem("password", JSON.stringify(data.password)),
-      alert("Login succesfull "),
-      navigate("/token")
-
+      role = response.data.role,
+      role_user()
       ))
       
       .catch((reason) => {

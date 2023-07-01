@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { link } from "../../components/Calendar/Constants";
 
 
 
@@ -14,7 +15,7 @@ export const Token = () =>{
       const onSubmit = (data) => {
         data.type = "log";
         console.log(JSON.stringify(data));
-        axios.post('https://egor28476.pythonanywhere.com/', data)
+        axios.post(link, data)
         .then(response => (
           console.log(response.data),
           localStorage.setItem("mail",JSON.stringify(data.mail)),
@@ -63,14 +64,9 @@ export const Token = () =>{
             type="submit"
             className="flex flex-col items-center justify-center  text-booked_clicked rounded border border-disabled_border placeholder-disabled_border hover:bg-button_selected w-5/6 py-2 mt-4"
           >
-            SIGN UP
+            FIND
           </button>
-          <div className="flex flex-row items-center justify-between mt-3">
-            <p>Do not have an account?</p>
-            <p onClick={() => navigate("/")} className="text-booked_clicked ml-4">
-              Register
-            </p>
-          </div>
+         
         </form>
       </div>
     );

@@ -5,6 +5,7 @@ import { generateSlots } from "./JsonGenerator";
 import { useDispatch } from "react-redux";
 import { setStatuses } from "../../store/slices/StatusSlice";
 import axios from "axios";
+import { link } from "../../components/Calendar/Constants";
 
 export const Timeslots = () => {
   const daysOfWeek = useSelector((state) => state.dateReducer.daysOfWeek);
@@ -30,7 +31,7 @@ export const Timeslots = () => {
          busySlots:  JSON.stringify(statuses["busy_slots"]),
        };
        axios
-         .post("https://egor28476.pythonanywhere.com/", data)
+         .post(link, data)
          .then((response) => console.log(response.data))
          .catch((error) => {
            console.log(error);
