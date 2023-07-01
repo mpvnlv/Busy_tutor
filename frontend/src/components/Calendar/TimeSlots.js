@@ -26,11 +26,11 @@ export const Timeslots = () => {
          type: "setTime",
          mail: JSON.parse(localStorage.getItem("mail")),
          password: JSON.parse(localStorage.getItem("password")),
-         freeSlots:  statuses["free_slots"],
-         busySlots: statuses["busy_slots"],
+         freeSlots:  JSON.stringify(statuses["free_slots"]),
+         busySlots:  JSON.stringify(statuses["busy_slots"]),
        };
        axios
-         .post("https://testing.egorleb.repl.co", data)
+         .post("https://egor28476.pythonanywhere.com/", data)
          .then((response) => console.log(response.data))
          .catch((error) => {
            console.log(error);

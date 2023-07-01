@@ -20,10 +20,10 @@ export const Login = () => {
     axios.post('https://egor28476.pythonanywhere.com/', data)
     .then(response => (
       console.log(response.data),
-      localStorage.setItem("mail",data.mail),
-      localStorage.setItem("password", data.password),
+      localStorage.setItem("mail",JSON.stringify(data.mail)),
+      localStorage.setItem("password", JSON.stringify(data.password)),
       alert("Login succesfull "),
-      navigate("/calendar")
+      navigate("/token")
 
       ))
       

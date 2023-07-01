@@ -28,7 +28,7 @@ export const Register = () => {
     data.type = "reg";
     console.log(JSON.stringify(data));
     axios
-      .post("https://testing.egorleb.repl.co", data)
+      .post("https://egor28476.pythonanywhere.com/", data)
       .then(
         (response) => (
           console.log(response.data),
