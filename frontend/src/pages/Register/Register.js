@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setRole } from "../../store/slices/RoleSlice";
+import { link } from "../../components/Calendar/Constants";
 
 export const errorMessagesServer = {
   404: 'User not found!',
@@ -28,7 +29,7 @@ export const Register = () => {
     data.type = "reg";
     console.log(JSON.stringify(data));
     axios
-      .post("https://egor28476.pythonanywhere.com/", data)
+      .post(link, data)
       .then(
         (response) => (
           console.log(response.data),

@@ -13,7 +13,7 @@ export const months_name = [
   "November",
   "December",
 ];
-
+export const link = "https://egor28476.pythonanywhere.com/"
 export const getDaysInMonth = (month, year) => {
   const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 

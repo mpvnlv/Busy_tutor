@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { link } from "../../components/Calendar/Constants";
 
 
 
@@ -14,7 +15,7 @@ export const Token = () =>{
       const onSubmit = (data) => {
         data.type = "log";
         console.log(JSON.stringify(data));
-        axios.post('https://egor28476.pythonanywhere.com/', data)
+        axios.post(link, data)
         .then(response => (
           console.log(response.data),
           localStorage.setItem("mail",JSON.stringify(data.mail)),
