@@ -12,13 +12,6 @@ export const Header = () => {
   const curSunday = useSelector((state) => state.dateReducer.curSunday);
   const dispatch = useDispatch();
   const navigate = useNavigate()
-  const role = useSelector((state) => state.roleReducer.role);
-
-   const Logout = () =>{
-    navigate("/")
-  }
-  
-
 
   return (
     <div className="flex justify-between items-center bg-header_bg py-6 px-12
@@ -30,9 +23,9 @@ export const Header = () => {
         <img onClick={() => {dispatch(nextWeek())}} className="hover:cursor-pointer" src={RightArrow} alt="right arrow" />
       </div>
       <div className="flex justify-between items-center">
-        <h1 className="pr-6 text-booked_clicked">AS {role === "visitor" ? "STUDENT" : "TUTOR" }</h1>
+        <h1 className="pr-6 text-booked_clicked">AS {JSON.parse(localStorage.getItem('role')) === "visitor" ? "STUDENT" : "TUTOR" }</h1>
         <img src={Avatar} alt="avatar" />
-        <h3 onClick = {()=>{Logout()}} className="pl-4">Logout</h3>
+        <h3 onClick = {()=>{  navigate("/")}} className="pl-4 hover:cursor-pointer">Logout</h3>
         </div>
     </div>
   );

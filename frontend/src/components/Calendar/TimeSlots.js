@@ -1,16 +1,12 @@
 import { useSelector } from "react-redux";
 import { TimeSlotBooking } from "./TimeSlotBooking";
-import { useEffect, useState } from "react";
-import { generateSlots } from "./JsonGenerator";
-import { useDispatch } from "react-redux";
-import { setStatuses } from "../../store/slices/StatusSlice";
+import { useEffect} from "react";
 import axios from "axios";
 import { link } from "../../components/Calendar/Constants";
 
 export const Timeslots = () => {
-  const daysOfWeek = useSelector((state) => state.dateReducer.daysOfWeek);
 
-  const dispatch = useDispatch();
+  const daysOfWeek = useSelector((state) => state.dateReducer.daysOfWeek);
 
   const statuses = useSelector((state) => state.statusReducer.statuses);
 
@@ -21,6 +17,33 @@ export const Timeslots = () => {
     const formattedHour = `${hour.toString().padStart(2, "0")}`;
     return [date, formattedHour];
   });
+
+
+  useEffect(() => {
+    // const data_student = {
+    //   type: "log",
+    //   mail: "vikal",
+    //   password: "123",
+    //   // "type":"reg",
+    //   // "mail":"vika",
+    //   // "password":"123",
+    //   // "role":"owner",
+    //   // "fullname":"Kruk Viktoria",
+    //   // "ownerMail": "",
+    //   // "phone":"8906675883"
+    // };
+    // axios
+    //   .post(link, data_student)
+    //   .then(
+    //     (response) => (
+    //       console.log(response.data), (fullname = response.data.fullname)
+    //     )
+    //   )
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+  }, [])
 
     useEffect(() => {
        const data = {

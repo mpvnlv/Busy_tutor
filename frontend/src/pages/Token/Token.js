@@ -13,22 +13,21 @@ export const Token = () =>{
       } = useForm({ mode: "onBlur", shouldUnregister: true });
     
       const onSubmit = (data) => {
-        data.type = "log";
+        data.type = "get_info";
         console.log(JSON.stringify(data));
         axios.post(link, data)
         .then(response => (
           console.log(response.data),
           localStorage.setItem("mail",JSON.stringify(data.mail)),
           navigate("/calendar")
-    
           ))
           
           .catch((reason) => {
             if (reason.response){
-              if (reason.response.status == 406){
+              if (reason.response.status === 406){
                 // alert("This user is alredy exist. Please log in")
               }
-              else if (reason.response.status == 405){
+              else if (reason.response.status === 405){
             
               }
               console.log(reason.response.status);

@@ -13,40 +13,13 @@ export const TimeSlotBooking = (props) => {
   };
 
   const [status, setStatus] = useState(colors[props.status]);
-  const role = useSelector((state) => state.roleReducer.role);
   const dispatch = useDispatch();
   const statuses = useSelector((state) => state.statusReducer.statuses);
-  var [count, setCount] = useState(0);
-  var fullname = "";
-
-  const getInfo = () => {
-    const data_student = {
-      type: "log",
-      mail: "vikal",
-      password: "123",
-      // "type":"reg",
-      // "mail":"vika",
-      // "password":"123",
-      // "role":"owner",
-      // "fullname":"Kruk Viktoria",
-      // "ownerMail": "",
-      // "phone":"8906675883"
-    };
-    axios
-      .post(link, data_student)
-      .then(
-        (response) => (
-          console.log(response.data), (fullname = response.data.fullname)
-        )
-      )
-      .catch((error) => {
-        console.log(error);
-      });
-  };
 
 
   const updateStatus = () => {
-    if (role === "visitor" && status === colors["No_slot"]) {
+    const role = JSON.parse(localStorage.getItem('role'))
+    if (role === "visitor" && status === colors["Free"]) {
       setStatus(colors["Busy"]);
       dispatch(
         updateStatuses({
@@ -77,7 +50,7 @@ export const TimeSlotBooking = (props) => {
         }}
         className={`pb-20 hover:bg-no_slot_hover hover:cursor-pointer rounded-md  ${status}`}
       ></div>
-      {count === 2 ? (
+      {/* {count === 2 ? (
         <div
           className="flex flex-col justify-center items-center  absolute -top-14 -right-28 group-hover:visible invisible  bg-white border-booked_clicked border-2 py-4 px-10 z-20
       rounded-tl-lg rounded-tr-lg rounded-br-lg text-booked_clicked"
@@ -87,7 +60,7 @@ export const TimeSlotBooking = (props) => {
         </div>
       ) : (
         <></>
-      )}
+      )} */}
     </div>
   );
 };

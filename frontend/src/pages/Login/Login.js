@@ -2,20 +2,16 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux";
-import { setCreds } from "../../store/slices/RoleSlice";
 import { link } from "../../components/Calendar/Constants";
+import { Error } from "../../components/Login/Error";
+import backgroundImage from "../../assets/Background.png";
 export const Login = () => {
-  const dispatch = useDispatch();
-  var role = "";
-  function role_user(){
-    if (role == "owner"){
-      navigate("/calendar")
-    }
-    else{
-      navigate("/token")
-    }
-  }
+
+  const background = {
+    backgroundImage: `url(${backgroundImage})`,
+    backgroundSize: "contain",
+    backgroundRepeat: "no-repeat",
+  };
 
   const {
     register,
@@ -26,22 +22,21 @@ export const Login = () => {
   const onSubmit = (data) => {
     data.type = "log";
     console.log(JSON.stringify(data));
-    axios.post(link, data)
-    .then(response => (
-      console.log(response.data),
-      localStorage.setItem("mail",JSON.stringify(data.mail)),
-      localStorage.setItem("password", JSON.stringify(data.password)),
-      role = response.data.role,
-      role_user()
-      ))
-      
+    axios
+      .post(link, data)
+      .then((response) => {
+        console.log(response.data);
+        localStorage.setItem("mail", JSON.stringify(data.mail));
+        localStorage.setItem("password", JSON.stringify(data.password));
+        const role = response.data.role;
+        role === "owner" ? navigate("/calendar") : navigate("/token");
+      })
+
       .catch((reason) => {
-        if (reason.response){
-          if (reason.response.status == 406){
+        if (reason.response) {
+          if (reason.response.status === 406) {
             // alert("This user is alredy exist. Please log in")
-          }
-          else if (reason.response.status == 405){
-        
+          } else if (reason.response.status === 405) {
           }
           console.log(reason.response.status);
         } else if (reason.request) {
@@ -53,10 +48,13 @@ export const Login = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div
+      style={background}
+      className="flex flex-col items-center justify-center h-screen"
+    >
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col items-center justify-center max-h-fit max-w-fit rounded-md border border-booked_clicked  px-42 py-8"
+        className="flex flex-col items-center justify-center max-h-fit max-w-fit rounded-md border border-booked_clicked  px-42 py-8 bg-white"
       >
         <h1 className="mb-8 mx-40 text-booked_clicked text-2xl">LOG IN</h1>
 
@@ -69,8 +67,8 @@ export const Login = () => {
           placeholder="Email"
           className="flex flex-col items-center justify-center my-3 px-4 py-2 text-booked_clicked rounded border border-disabled_border placeholder-disabled_border w-5/6"
         ></input>
-        {errors?.Email?.type === "required" && <p>This field is required</p>}
-        {errors?.Email?.type === "pattern" && <p>Not a valid email</p>}
+        {errors?.Email?.type === "required" && <Error error={"This field is required"} />}
+        {errors?.Email?.type === "pattern" && <Error error={"Not a valid mail"}/>}
 
         <input
           {...register("password", {
@@ -81,8 +79,7 @@ export const Login = () => {
           placeholder="Password"
           className="flex flex-col items-center justify-center my-3 px-4 py-2 text-booked_clicked rounded border border-disabled_border placeholder-disabled_border w-5/6"
         ></input>
-        {errors?.Email?.type === "required" && <p>This field is required</p>}
-
+        {errors?.Email?.type === "required" && <Error error={"This field is required"} />}
         <button
           type="submit"
           className="flex flex-col items-center justify-center  text-booked_clicked rounded border border-disabled_border placeholder-disabled_border hover:bg-button_selected w-5/6 py-2 mt-8"

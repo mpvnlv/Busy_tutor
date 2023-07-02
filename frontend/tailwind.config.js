@@ -13,6 +13,7 @@ module.exports = {
         text_dark: "#221E1E",
         button_selected: "#E7F8FF",
         disabled_border: "#99AFDA",
+        error: "#F58282",
       },
     },
   },

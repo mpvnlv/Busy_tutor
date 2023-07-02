@@ -1,10 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
-import './App.css';
 import { Calendar } from './pages/Calendar/Calendar';
 import { Register } from './pages/Register/Register';
 import {Login} from './pages/Login/Login'
 
-import { Token } from './pages/Student_get_token/token';
+import { Token } from './pages/Token/Token';
 
 export const App = () => {
   return (
