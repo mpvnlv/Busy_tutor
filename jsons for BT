@@ -111,6 +111,7 @@ EXAMPLE
 ----------------------------------------------
 setOvner
 {
+"type":"setOwner",
 "mail":string,
 "password":string,
 "OwnerId":string
