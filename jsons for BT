@@ -114,7 +114,7 @@ setOvner
 "type":"setOwner",
 "mail":string,
 "password":string,
-"OwnerId":string
+"ownerId":string
 }
 response
 - only status (404, 200, ...)
