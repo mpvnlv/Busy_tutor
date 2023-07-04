@@ -1,8 +1,9 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { TimeSlotBooking } from "./TimeSlotBooking";
 import { useEffect} from "react";
 import axios from "axios";
 import { link } from "../../components/Calendar/Constants";
+import { setTutor } from "../../store/slices/ModalSlice";
 
 export const Timeslots = () => {
 
@@ -18,6 +19,9 @@ export const Timeslots = () => {
     return [date, formattedHour];
   });
 
+  const dispatch = useDispatch();
+
+ 
 
   useEffect(() => {
     // const data_student = {
@@ -61,6 +65,21 @@ export const Timeslots = () => {
          });
        console.log(data);
     }, [statuses]);
+  
+   const getInfo = async () => {
+     const data = {};
+     data.type = "getInfo";
+     data.mail = JSON.parse(localStorage.getItem("ownerMail"));
+     console.log(data);
+     axios.post(link, data).then((response) => {
+       console.log(response.data);
+       dispatch(setTutor(response.data.fullname));
+     });
+   };
+
+   useEffect(() => {
+     getInfo();
+   }, []);
 
 
   const checkStatus = (timeslot) => {

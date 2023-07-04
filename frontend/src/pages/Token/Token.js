@@ -2,10 +2,16 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { link } from "../../components/Calendar/Constants";
+import backgroundImage from "../../assets/Background.png";
 
-
-
-export const Token = () =>{
+export const Token = () => {
+  
+    const background = {
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: "contain",
+      backgroundRepeat: "no-repeat",
+    };
+  
     const {
         register,
         formState: { errors },
@@ -13,12 +19,14 @@ export const Token = () =>{
       } = useForm({ mode: "onBlur", shouldUnregister: true });
     
       const onSubmit = (data) => {
-        data.type = "get_info";
+        data.type = "setOwner";
+        data.password = JSON.parse(localStorage.getItem("password"));
+        data.mail = JSON.parse(localStorage.getItem("mail"));
         console.log(JSON.stringify(data));
         axios.post(link, data)
         .then(response => (
           console.log(response.data),
-          localStorage.setItem("mail",JSON.stringify(data.mail)),
+          localStorage.setItem("ownerMail",JSON.stringify(data.ownerMail)),
           navigate("/calendar")
           ))
           
@@ -39,15 +47,15 @@ export const Token = () =>{
     
       const navigate = useNavigate();
     return (
-        <div className="flex flex-col items-center justify-center h-screen">
+        <div style={background} className="flex flex-col items-center justify-center h-screen">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col items-center justify-center max-h-fit max-w-fit rounded-md border border-booked_clicked  px-42 py-8"
+          className="flex flex-col items-center justify-center max-h-fit max-w-fit rounded-md border border-booked_clicked  px-42 py-8 bg-white"
         >
           <h1 className="mb-8 mx-40 text-booked_clicked text-2xl">FIND YOUR TEACHER</h1>
   
           <input
-            {...register("mail", {
+            {...register("ownerMail", {
               required: true,
               pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
             })}

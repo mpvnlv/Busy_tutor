@@ -9,7 +9,6 @@ export const Calendar = () => {
 
   return (
     <>
-      <Header/>
       <Days />
       <div className="flex flex-row items-start">
         <div className="flex flex-row overflow-auto no-scrollbar w-full max-h-[calc(100vh-16rem)]">

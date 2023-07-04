@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { updateStatuses } from "../../store/slices/StatusSlice";
 import { link } from "../../components/Calendar/Constants";
+import { openWindow, setDateTime, setTutor } from "../../store/slices/ModalSlice";
+
 
 export const TimeSlotBooking = (props) => {
   const colors = {
@@ -15,21 +17,17 @@ export const TimeSlotBooking = (props) => {
   const [status, setStatus] = useState(colors[props.status]);
   const dispatch = useDispatch();
   const statuses = useSelector((state) => state.statusReducer.statuses);
-
-
+  const isOpen = useSelector((state) => state.modalReducer.isOpen);
+  
   const updateStatus = () => {
-    const role = JSON.parse(localStorage.getItem('role'))
-    if (role === "visitor" && status === colors["Free"]) {
-      setStatus(colors["Busy"]);
+    const role = JSON.parse(localStorage.getItem("role"));
+    if (role === "visitor") {
       dispatch(
-        updateStatuses({
-          date: props.timeslot[0],
-          status: "busy_slots",
-          time: props.timeslot[1],
-        })
+        setDateTime({ date: props.timeslot[0], time: props.timeslot[1] })
       );
-      
-      
+      dispatch(openWindow());
+      setStatus(colors["Busy"]);
+
     } else if (role === "owner" && status === colors["No_slot"]) {
       setStatus(colors["Free"]);
       dispatch(
