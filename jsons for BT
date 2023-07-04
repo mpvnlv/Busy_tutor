@@ -118,3 +118,18 @@ setOvner
 }
 response
 - only status (404, 200, ...)
+----------------------------------------------
+----------------------------------------------
+getInfo
+{
+"type":"getInfo",
+"mail":string
+}
+response
+{
+"role": "owner",
+"mail": string,
+"fullname": string,
+"freeSlots": string,
+"busySlots": string
+}
