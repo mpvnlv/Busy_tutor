@@ -3,7 +3,6 @@ import { Days } from "../../components/Calendar/Days";
 import { Time } from "../../components/Calendar/Time";
 import { Timeslots } from "../../components/Calendar/TimeSlots";
 import { SlotsDescription } from "../../components/Calendar/SlotsDescription";
-import { Header } from "../../components/Header/Header";
 
 export const Calendar = () => {
 

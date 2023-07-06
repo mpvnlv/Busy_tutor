@@ -13,29 +13,49 @@ const statusSlice = createSlice({
   reducers: {
     setStatuses: (state, action) => {
       console.log("Setting statuses");
+      console.log(action.payload)
       state.statuses = action.payload;
     },
     updateStatuses: (state, action) => {
       console.log(action.payload);
+      console.log(state)
       const [day, month, year] = action.payload.date;
       const status = action.payload.status;
       const slot = action.payload.time;
-      delete state.statuses["busy_slots"]?.[year]?.[month]?.[day]?.[slot];
-      delete state.statuses["free_slots"]?.[year]?.[month]?.[day]?.[slot];
-      if (!state.statuses[status]) {
-        state.statuses[status] = {};
+      const role = action.payload.role;
+ 
+      if (role === "owner" && status === "free_slots") {
+        if (!state.statuses[status]) {
+          state.statuses[status] = {};
+        }
+        console.log(state.statuses[status])
+        if (!state.statuses[status][year]) {
+          state.statuses[status][year] = {};
+        }
+        if (!state.statuses[status][year][month]) {
+          state.statuses[status][year][month] = {};
+        }
+        if (!state.statuses[status][year][month][day]) {
+          state.statuses[status][year][month][day] = [];
+        }
+        state.statuses[status][year][month][day].push(slot);
       }
-      if (!state.statuses[status][year]) {
-        state.statuses[status][year] = {};
-      }
-      if (!state.statuses[status][year][month]) {
-        state.statuses[status][year][month] = {};
-      }
-      if (!state.statuses[status][year][month][day]) {
-        state.statuses[status][year][month][day] = [];
-      }
-      state.statuses[status][year][month][day].push(slot);
-    }
+    //   delete state.statuses["busy_slots"]?.[year]?.[month]?.[day]?.[slot];
+    //   delete state.statuses["free_slots"]?.[year]?.[month]?.[day]?.[slot];
+    //   if (!state.statuses[status]) {
+    //     state.statuses[status] = {};
+    //   }
+    //   if (!state.statuses[status][year]) {
+    //     state.statuses[status][year] = {};
+    //   }
+    //   if (!state.statuses[status][year][month]) {
+    //     state.statuses[status][year][month] = {};
+    //   }
+    //   if (!state.statuses[status][year][month][day]) {
+    //     state.statuses[status][year][month][day] = [];
+    //   }
+    //   state.statuses[status][year][month][day].push(slot);
+     }
   },
 });
 
