@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { TimeSlotBooking } from "./TimeSlotBooking";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { link } from "../../components/Calendar/Constants";
 import { setTutor } from "../../store/slices/ModalSlice";
@@ -11,14 +11,19 @@ export const Timeslots = () => {
 
   const statuses = useSelector((state) => state.statusReducer.statuses);
 
-  const timeslots = new Array(24 * 7).fill(null).map((_, index) => {
-    const dayIndex = index % 7;
-    const hour = Math.floor(index / 7);
-    const date = daysOfWeek[dayIndex];
-    const formattedHour = `${hour.toString().padStart(2, "0")}`;
-    return [date, formattedHour];
-  });
-  
+  const [timeslots, setTimeslots] = useState([]);
+
+  useEffect(() => {
+    setTimeslots(
+      new Array(24 * 7).fill(null).map((_, index) => {
+        const dayIndex = index % 7;
+        const hour = Math.floor(index / 7);
+        const date = daysOfWeek[dayIndex];
+        const formattedHour = `${hour.toString().padStart(2, "0")}`;
+        return [date, formattedHour];
+      })
+    );
+  }, [daysOfWeek]);
 
   const dispatch = useDispatch();
 
@@ -34,7 +39,10 @@ export const Timeslots = () => {
 
     const data = {
       type: "setTime",
-      mail: JSON.parse(localStorage.getItem("mail")),
+      mail:
+        JSON.parse(localStorage.getItem("role")) === "owner"
+          ? JSON.parse(localStorage.getItem("mail"))
+          : JSON.parse(localStorage.getItem("ownerMail")),
       password: JSON.parse(localStorage.getItem("password")),
       freeSlots: JSON.stringify(
         statuses.free_slots !== undefined ? statuses.free_slots : {}
@@ -54,7 +62,7 @@ export const Timeslots = () => {
     console.log(data);
   }, [statuses]);
 
-  const getInfo = async () => {
+  const getInfoTeacher = async () => {
     const data = {};
     data.type = "getInfo";
     data.mail = JSON.parse(localStorage.getItem("ownerMail"));
@@ -67,10 +75,6 @@ export const Timeslots = () => {
       })
       .catch((reason) => {
         if (reason.response) {
-          if (reason.response.status === 406) {
-            // alert("This user is alredy exist. Please log in")
-          } else if (reason.response.status === 405) {
-          }
           console.log(reason.response.status);
         } else if (reason.request) {
           console.log(reason.response.status);
@@ -81,10 +85,14 @@ export const Timeslots = () => {
   const getStatuses = async () => {
     const data = {};
     data.type = "getTime";
-    if (JSON.parse(localStorage.getItem("role")) === "owner")
+    // console.log(JSON.parse(localStorage.getItem("mail")));
+    //  console.log(JSON.parse(localStorage.getItem("ownerMail")));
+    if (JSON.parse(localStorage.getItem("role")) === "owner") {
       data.ownerMail = JSON.parse(localStorage.getItem("mail"));
-    else data.ownerMail = JSON.parse(localStorage.getItem("ownerMail"));
-    console.log(data);
+    } else {
+      data.ownerMail = JSON.parse(localStorage.getItem("ownerMail"));
+    }
+    console.log("getTime", data);
     axios
       .post(link, data)
       .then((response) => {
@@ -110,27 +118,35 @@ export const Timeslots = () => {
   };
 
   useEffect(() => {
-    if (JSON.parse(localStorage.getItem("role") === "owner")) getInfo();
+    if (JSON.parse(localStorage.getItem("role")) === "visitor") {
+      console.log("test");
+      getInfoTeacher();
+    }
+
     getStatuses();
   }, []);
 
   const checkStatus = (timeslot) => {
     const [date, hour] = timeslot;
     var [day, month, year] = date;
-    
+
     // console.log(date, hour);
 
-    if (statuses?.["busy_slots"]?.[year]?.[month]?.[day]?.includes(hour)) {
+    if (statuses?.["busy_slots"]?.[year]?.[month]?.[day]?.[hour]) {
       // console.log(`${date}, ${hour}: Busy`);
-      return "Busy";
+      return [
+        "Busy",
+        statuses["busy_slots"][year][month][day][hour]["name"],
+        statuses["busy_slots"][year][month][day][hour]["phone"],
+      ];
     } else if (
       statuses?.["free_slots"]?.[year]?.[month]?.[day]?.includes(hour)
     ) {
       // console.log(`${date}, ${hour}: Free`);
-      return "Free";
+      return ["Free"];
     } else {
       // console.log(`${date}, ${hour}: No slot`);
-      return "No_slot";
+      return ["No_slot"];
     }
   };
 

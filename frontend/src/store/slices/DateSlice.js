@@ -14,6 +14,10 @@ const dateSlice = createSlice({
   name: "dateSlice",
   initialState,
   reducers: {
+    setInitialState: (state, action) => {
+      state.curSunday = getCurrentMonday(...getCurrentDate());
+      state.daysOfWeek = getDaysInWeek(...getCurrentMonday(...getCurrentDate()));
+    },
     nextWeek: (state, action) => {
       state.curSunday = getNextMonday(state.curSunday);
       state.daysOfWeek = getDaysInWeek(...state.curSunday);
@@ -25,6 +29,6 @@ const dateSlice = createSlice({
   },
 });
 
-export const { nextWeek, prevWeek } = dateSlice.actions;
+export const { nextWeek, prevWeek, setInitialState } = dateSlice.actions;
 
 export default dateSlice.reducer;

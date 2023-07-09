@@ -28,6 +28,8 @@ export const Login = () => {
         console.log(response.data);
         localStorage.setItem("mail", JSON.stringify(data.mail));
         localStorage.setItem("password", JSON.stringify(data.password));
+        localStorage.setItem("fullname", JSON.stringify(response.data.fullname));
+        localStorage.setItem("phone", JSON.stringify(response.data.phone))
         const role = response.data.role;
         localStorage.setItem("role", JSON.stringify(role))
         role === "owner" ? navigate("/calendar") : navigate("/token");

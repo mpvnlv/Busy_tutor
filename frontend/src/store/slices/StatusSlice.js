@@ -40,6 +40,30 @@ const statusSlice = createSlice({
         }
         state.statuses[status][year][month][day].push(slot);
       }
+
+      if (role === "visitor" && status === "busy_slots") { 
+        const name = action.payload.name;
+        const phone = action.payload.phone;
+        delete state.statuses["free_slots"]?.[year]?.[month]?.[day]?.[slot];
+        if (!state.statuses[status]) {
+          state.statuses[status] = {};
+        }
+        if (!state.statuses[status][year]) {
+          state.statuses[status][year] = {};
+        }
+        if (!state.statuses[status][year][month]) {
+          state.statuses[status][year][month] = {};
+        }
+        if (!state.statuses[status][year][month][day]) {
+          state.statuses[status][year][month][day] = {};
+        }
+        if (!state.statuses[status][year][month][day][slot]) {
+          state.statuses[status][year][month][day][slot] = {};
+        }
+        state.statuses[status][year][month][day][slot].name = name;
+        state.statuses[status][year][month][day][slot].phone = phone;
+        
+      }
     //   delete state.statuses["busy_slots"]?.[year]?.[month]?.[day]?.[slot];
     //   delete state.statuses["free_slots"]?.[year]?.[month]?.[day]?.[slot];
     //   if (!state.statuses[status]) {
@@ -55,7 +79,8 @@ const statusSlice = createSlice({
     //     state.statuses[status][year][month][day] = [];
     //   }
     //   state.statuses[status][year][month][day].push(slot);
-     }
+     
+    },
   },
 });
 

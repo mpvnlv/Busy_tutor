@@ -17,7 +17,11 @@ export const Modal = () => {
        updateStatuses({
          date: date,
          status: "busy_slots",
-         time: time
+         time: time,
+         role: "visitor",
+         name: JSON.parse(localStorage.getItem("fullname")),
+         phone: JSON.parse(localStorage.getItem("phone")),
+        
        })
      );
   }

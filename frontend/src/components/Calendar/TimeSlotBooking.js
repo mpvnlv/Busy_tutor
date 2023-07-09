@@ -1,13 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { updateStatuses } from "../../store/slices/StatusSlice";
-import { link } from "../../components/Calendar/Constants";
 import {
   openWindow,
   setDateTime,
-  setTutor,
 } from "../../store/slices/ModalSlice";
 
 export const TimeSlotBooking = (props) => {
@@ -17,21 +13,20 @@ export const TimeSlotBooking = (props) => {
     Busy: "bg-booked_normal",
   };
 
-  const [status, setStatus] = useState(colors[props.status]);
+  const [status, setStatus] = useState(colors[props.status[0]]);
 
   useEffect(() => {
     // console.log("props.status", props.status)
-    setStatus(colors[props.status]);
-  }, [colors, props.status])
+    setStatus(colors[props.status[0]]);
+  }, [props.status])
 
 
   const dispatch = useDispatch();
-  const statuses = useSelector((state) => state.statusReducer.statuses);
-  const isOpen = useSelector((state) => state.modalReducer.isOpen);
 
   const updateStatus = () => {
     const role = JSON.parse(localStorage.getItem("role"));
-    if (role === "visitor") {
+    console.log(role)
+    if (role === "visitor" && status === colors["Free"]) {
       dispatch(
         setDateTime({ date: props.timeslot[0], time: props.timeslot[1] })
       );
@@ -47,7 +42,6 @@ export const TimeSlotBooking = (props) => {
           role: role,
         })
       );
-      
     }
   };
 
@@ -59,17 +53,17 @@ export const TimeSlotBooking = (props) => {
         }}
         className={`pb-20 hover:bg-no_slot_hover hover:cursor-pointer rounded-md  ${status}`}
       ></div>
-      {/* {count === 2 ? (
+      {props.status[0] === "Busy" && JSON.parse(localStorage.getItem("role")) === "owner" ? (
         <div
-          className="flex flex-col justify-center items-center  absolute -top-14 -right-28 group-hover:visible invisible  bg-white border-booked_clicked border-2 py-4 px-10 z-20
+          className="flex flex-col justify-center items-center  absolute top-0 right-0 group-hover:visible invisible w-full h-full bg-white border-booked_clicked border-2 py-4 px-5 z-20
       rounded-tl-lg rounded-tr-lg rounded-br-lg text-booked_clicked"
         >
-          <p className="z-30">{fullname}</p>
-          <p className="z-30">тут мне с сервера пришлют номер телефона</p>
+          <p className="z-30">{props.status[1]}</p>
+          <p className="z-30">{props.status[2]}</p>
         </div>
       ) : (
         <></>
-      )} */}
+      )}
     </div>
   );
 };
