@@ -15,6 +15,9 @@ module.exports = {
         disabled_border: "#99AFDA",
         error: "#F58282",
       },
+      fontFamily: {
+        next_art: ["NEXT ART", "sans-serif"],
+      },
     },
   },
   plugins: [],

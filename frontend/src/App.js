@@ -15,7 +15,7 @@ export const App = () => {
   return (
     <>
       <div
-        className={`container mx-auto max-w-screen-[1440px] relative ${
+        className={`container mx-auto max-w-screen-[1440px] relative font-next_art ${
           isOpen && "blur-sm"
         }`}
       >

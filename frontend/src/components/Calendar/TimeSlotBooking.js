@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateStatuses } from "../../store/slices/StatusSlice";
-import {
-  openWindow,
-  setDateTime,
-} from "../../store/slices/ModalSlice";
+import { openWindow, setDateTime } from "../../store/slices/ModalSlice";
 
 export const TimeSlotBooking = (props) => {
   const colors = {
@@ -18,14 +15,13 @@ export const TimeSlotBooking = (props) => {
   useEffect(() => {
     // console.log("props.status", props.status)
     setStatus(colors[props.status[0]]);
-  }, [props.status])
-
+  }, [props.status]);
 
   const dispatch = useDispatch();
 
   const updateStatus = () => {
     const role = JSON.parse(localStorage.getItem("role"));
-    console.log(role)
+    console.log(role);
     if (role === "visitor" && status === colors["Free"]) {
       dispatch(
         setDateTime({ date: props.timeslot[0], time: props.timeslot[1] })
@@ -53,7 +49,8 @@ export const TimeSlotBooking = (props) => {
         }}
         className={`pb-20 hover:bg-no_slot_hover hover:cursor-pointer rounded-md  ${status}`}
       ></div>
-      {props.status[0] === "Busy" && JSON.parse(localStorage.getItem("role")) === "owner" ? (
+      {props.status[0] === "Busy" &&
+      JSON.parse(localStorage.getItem("role")) === "owner" ? (
         <div
           className="flex flex-col justify-center items-center  absolute top-0 right-0 group-hover:visible invisible w-full h-full bg-white border-booked_clicked border-2 py-4 px-5 z-20
       rounded-tl-lg rounded-tr-lg rounded-br-lg text-booked_clicked"

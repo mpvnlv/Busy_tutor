@@ -17,3 +17,8 @@
       }
     }
   }
+
+@font-face {
+  font-family: "NEXT ART";
+  src: url("../public/fonts/next_art/NEXT\ ART_Regular.otf");
+}
